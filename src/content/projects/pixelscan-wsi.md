@@ -2,7 +2,7 @@
 title: PixelScan WSI
 role: Software Developer
 period: Summer 2026
-order: 5
+order: 4
 summary: Whole-slide imaging for the microscope you already have — a C++ desktop app that stitches a live camera feed into gigapixel slides, with a viewer, measurements and SVS / OME-TIFF export. Shipped on the Microsoft Store.
 tags: [C++, OpenCV, libvips, Microsoft Store]
 stats:

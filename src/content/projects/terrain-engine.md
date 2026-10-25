@@ -2,7 +2,7 @@
 title: Terrain Engine
 role: Add-on Developer · Personal project
 period: '2026'
-order: 1
+order: 2
 featured: true
 summary: A Gaea / World Machine-style terrain generator that lives inside Blender — a non-destructive layer stack of generators, shaping operations and erosion simulations, running entirely in GPU compute shaders.
 tags: [Python, GLSL compute, Blender gpu module, Simulation]
@@ -19,21 +19,24 @@ highlights:
   - Data maps — height, slope, flow, wear, deposit, curvature, occlusion and lakes (priority-flood pit filling) — drive a procedural mask on every layer, the color bake, EXR / PNG export and point attributes for Geometry Nodes.
   - 'Curve-driven features: draw a Bezier curve to raise ridges, carve valleys and rivers or flatten roads through a GPU signed-distance field.'
   - Work is split into bounded GPU dispatches so 4K grids never trip the Windows GPU watchdog, and a headless test suite and timing report run in background Blender.
-cover: ../../assets/projects/terrain-engine/alpine-close.webp
-coverAlt: Alpine Mountains preset — stream-power valleys, droplet gullies and a snow line, rendered in Cycles
+cover: ../../assets/projects/terrain-engine/cover.webp
+coverAlt: Alpine preset at 2048² as shaded relief with contour lines and the drainage network from the flow map
 gallery:
-  - { src: ../../assets/projects/terrain-engine/swiss-alps-close.webp, alt: 'Swiss Alps preset: Swiss turbulence, hard-rock stream power, thermal strata and simulated snowfall' }
-  - { src: ../../assets/projects/terrain-engine/badlands-close.webp, alt: 'Badlands preset: soft-rock ridges stripped into gullies, with striped strata' }
-  - { src: ../../assets/projects/terrain-engine/desert-canyon-close.webp, alt: 'Desert Canyon preset: slot canyons cut along the plateau’s own drainage network' }
-  - { src: ../../assets/projects/terrain-engine/canyon-close.webp, alt: 'Canyon Mesas preset: terraced plateaus cut by the shallow-water pipe model' }
-  - { src: ../../assets/projects/terrain-engine/island-wide.webp, alt: 'Volcanic Island preset: radial island mask, droplet erosion and a flat sea floor' }
-  - { src: ../../assets/projects/terrain-engine/alpine-wide.webp, alt: 'Alpine Mountains as a full 200 m tile (1024² grid)' }
-  - { src: ../../assets/projects/terrain-engine/map-color-before.webp, alt: 'Color bake before the simulation layers (Alpine, top-down)' }
-  - { src: ../../assets/projects/terrain-engine/map-color-after.webp, alt: 'Color bake after stream power, droplet and thermal erosion' }
-  - { src: ../../assets/projects/terrain-engine/map-flow.webp, alt: 'Flow map: GPU flow accumulation over the final heightmap' }
-  - { src: ../../assets/projects/terrain-engine/map-wear-deposit.webp, alt: 'Wear (orange) and deposit (blue) maps written by the erosion layers' }
-  - { src: ../../assets/projects/terrain-engine/map-occlusion.webp, alt: 'Horizon-based ambient occlusion data map' }
-  - { src: ../../assets/projects/terrain-engine/map-height.webp, alt: 'Final 1024² heightmap' }
+  - src: ../../assets/projects/terrain-engine/progression.webp
+    alt: 'The Alpine stack, one layer at a time (1024²). Timings are incremental: the layer cache recomputes only from the newly enabled layer.'
+    wide: true
+  - src: ../../assets/projects/terrain-engine/erosion-models.webp
+    alt: 'One base terrain through each hydraulic model, with the resulting flow maps: droplets cut fine gullies, the pipe model carves dendritic channels, stream power builds long valley networks.'
+    wide: true
+  - src: ../../assets/projects/terrain-engine/resolution.webp
+    alt: 'Resolution independence: the same stack at 256² to 2048² keeps its landforms while detail increases. Full-stack generation times on an RTX 3050.'
+    wide: true
+  - src: ../../assets/projects/terrain-engine/data-maps.webp
+    alt: 'Data maps computed on the GPU, used for masks, the color bake, export and Geometry Nodes attributes.'
+    wide: true
+  - src: ../../assets/projects/terrain-engine/before-after.webp
+    alt: 'Color bake before and after the simulation layers (top-down).'
+    wide: true
 links:
   - { label: 'Explore the presets in 3D', url: '/#top' }
 ---
@@ -46,8 +49,9 @@ Layers can be masked by any data map (height, slope, flow, wear, curvature…), 
 only on high ground" or "rock where erosion wore the surface" come for free. The result is baked into a
 color map and a mesh with float attributes ready for Geometry Nodes scattering.
 
-The 3D terrain at the top of the home page is not a mock-up: it is the add-on's own output for six of its
-presets, exported headless from Blender and rendered in the browser.
+The 3D terrain at the top of the home page is not a mock-up: it is the add-on's own output for five of its
+presets, exported headless from Blender and rendered in the browser. Every figure on this page is generated
+from the add-on's raw exports as well.
 
 ## Architecture
 
@@ -93,8 +97,9 @@ All erosion parameters are defined on a 512 reference grid. For a grid of size N
 | erosion per visit | ÷ r | each cell is visited r times more often |
 | evaporation, inertia | per-step rate ^ (1/r) | per-step rates become per-reference-cell rates |
 
-A stack tuned at 512² therefore looks the same at 2048² — it just costs ~64× the work (16× the droplets,
-each living 4× longer).
+A stack tuned at 512² therefore looks the same at 2048² — it just costs more work (16× the droplets, each
+living 4× longer). Measured for the full Alpine stack on an RTX 3050: 0.12 s at 256², 0.30 s at 512²,
+1.21 s at 1024² and 11.25 s at 2048².
 
 ## Engineering for the GPU
 
@@ -114,7 +119,6 @@ Full preset stacks at 1024², including the extra data maps, measured headless i
 | Preset | Simulation layers | Time |
 |---|---|---|
 | Volcanic Island | Droplet erosion | 1.1 s |
-| Desert Canyon | Thermal, stream power | 1.5 s |
 | Badlands | Stream power, thermal, droplet | 2.3 s |
 | Swiss Alps | Stream power, droplet, thermal, snow | 2.4 s |
 | Alpine Mountains | Stream power, droplet, thermal | 3.1 s |

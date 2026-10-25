@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const [, , projectDir, src, outDir, outJson, ...presets] = process.argv;
-const require = createRequire(path.join(projectDir, 'package.json'));
+const require = createRequire(path.resolve(projectDir, 'package.json'));
 const sharp = require('sharp');
 const manifest = JSON.parse(fs.readFileSync(path.join(src, 'manifest.json'), 'utf8'));
 const GEO = 512;

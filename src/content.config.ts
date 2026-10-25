@@ -21,8 +21,8 @@ const projects = defineCollection({
       /** Optional render. Path is relative to the .md file, e.g. ../../assets/projects/icars/cover.jpg */
       cover: image().optional(),
       coverAlt: z.string().optional(),
-      /** Images with captions; `alt` doubles as the caption. */
-      gallery: z.array(z.object({ src: image(), alt: z.string() })).optional(),
+      /** Images with captions; `alt` doubles as the caption. `wide` spans the full content width. */
+      gallery: z.array(z.object({ src: image(), alt: z.string(), wide: z.boolean().default(false) })).optional(),
       /** YouTube videos: `id` is the part after watch?v= */
       videos: z.array(z.object({ id: z.string(), title: z.string() })).optional(),
       links: z.array(z.object({ label: z.string(), url: z.string() })).optional(),

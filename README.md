@@ -70,12 +70,20 @@ with the add-on installed and enabled in Blender:
 
 ```sh
 # 1. generate + export (and render Cycles shots) headless — does not touch any open Blender session
-"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" -b --python tools/terrain-engine/te_export.py -- C:/tmp/te_out 1024 1 ALPINE SWISS_ALPS DESERT_CANYON ISLAND BADLANDS CANYON
+"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" -b --python tools/terrain-engine/te_export.py -- C:/tmp/te_out 1024 1 ALPINE SWISS_ALPS ISLAND BADLANDS CANYON
 # 2. convert to web textures + src/data/terrain-presets.json
-node tools/terrain-engine/te_to_web.mjs . C:/tmp/te_out public/terrain src/data/terrain-presets.json ALPINE SWISS_ALPS DESERT_CANYON ISLAND BADLANDS CANYON
+node tools/terrain-engine/te_to_web.mjs . C:/tmp/te_out public/terrain src/data/terrain-presets.json ALPINE SWISS_ALPS ISLAND BADLANDS CANYON
 ```
 
 Preset keys are the ones in the add-on's `presets.py`. The first preset in the list is the one shown on load.
+
+The technical figures on the Terrain Engine page (layer progression, erosion models, resolution test,
+data maps, before/after, cover) are regenerated the same way:
+
+```sh
+"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" -b --python tools/terrain-engine/te_figures.py -- C:/tmp/te_fig
+node tools/terrain-engine/te_figures.mjs . C:/tmp/te_fig C:/tmp/te_out src/assets/projects/terrain-engine
+```
 
 ### Adding renders
 

@@ -2,7 +2,7 @@
 title: iCars
 role: Blender Add-on Developer & Designer
 period: Winter 2025
-order: 4
+order: 3
 summary: Traffic simulation, car rigging and crash physics for Blender — real-time urban traffic synchronized with iCity, drifting with dynamic tire marks, and a custom vehicle physics model.
 tags: [Python, Blender API, Vehicle physics, Traffic simulation]
 stats:
@@ -15,16 +15,14 @@ highlights:
 cover: ../../assets/projects/icars/rain-street.webp
 coverAlt: A double-decker bus and a sports car on a wet city street
 gallery:
-  - { src: ../../assets/projects/icars/aerial-traffic.webp, alt: 'City-scale traffic running on an iCity street network' }
-  - { src: ../../assets/projects/icars/lane-debug.webp, alt: 'Lane and direction debug view of the traffic system' }
-  - { src: ../../assets/projects/icars/traffic-intersection.webp, alt: 'Traffic flowing through a multi-lane intersection' }
+  - { src: ../../assets/projects/icars/aerial-traffic.webp, alt: 'City-scale traffic simulation, seen from above' }
+  - { src: ../../assets/projects/icars/lane-debug.webp, alt: 'Vehicles following lane markers in the traffic debug view' }
   - { src: ../../assets/projects/icars/rig-controls.webp, alt: 'Vehicle rig with steering and wheel controls' }
   - { src: ../../assets/projects/icars/vehicle-lineup.webp, alt: 'The rigged vehicle library' }
-  - { src: ../../assets/projects/icars/icars-2.webp, alt: 'iCars 2 key art' }
 videos:
   - { id: -u5-2Ciz9RQ, title: 'iCars 2 — smoke, rigging and traffic' }
   - { id: cBFsK-0L3eo, title: 'Cinematic traffic simulation, synchronized with iCity' }
-  - { id: t1Fe5QZlaOk, title: 'Curve-controlled driving: drift, speed and ghost preview' }
+  - { id: t1Fe5QZlaOk, title: 'iCars Free: curve-controlled driving, drift, speed and ghost preview' }
   - { id: lBhfQFehh-U, title: 'Cinematic crash VFX without keyframes' }
 links:
   - { label: 'View on Superhive', url: 'https://superhivemarket.com/products/icars' }

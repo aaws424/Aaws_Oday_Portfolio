@@ -105,9 +105,14 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
             <h2 id="gallery-title">Gallery</h2>
             <div class="gallery">
               {data.gallery.map((item) => (
-                <figure>
+                <figure class:list={{ wide: item.wide }}>
                   <a href={item.src.src} target="_blank" rel="noopener">
-                    <Image src={item.src} alt={item.alt} widths={[600, 1000, 1400]} sizes="(min-width: 1200px) 560px, (min-width: 700px) 50vw, 100vw" />
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      widths={item.wide ? [800, 1400, 2000] : [600, 1000, 1400]}
+                      sizes={item.wide ? '(min-width: 1200px) 1120px, 100vw' : '(min-width: 1200px) 560px, (min-width: 700px) 50vw, 100vw'}
+                    />
                   </a>
                   <figcaption>{item.alt}</figcaption>
                 </figure>
@@ -348,6 +353,14 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
     .videos {
       grid-template-columns: repeat(2, 1fr);
     }
+
+    .gallery figure.wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .gallery {
+    align-items: start;
   }
 
   .gallery figure {
@@ -364,8 +377,7 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
 
   .gallery :global(img) {
     width: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
+    height: auto;
     transition: transform 0.5s var(--ease);
   }
 

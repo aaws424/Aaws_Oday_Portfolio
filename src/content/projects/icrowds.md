@@ -2,7 +2,8 @@
 title: iCrowds
 role: Blender Add-on Developer & Designer
 period: Winter 2026
-order: 3
+order: 1
+featured: true
 summary: Crowd simulation for Blender — procedural placement for stadiums, streets and queues, path-drawn crowds, obstacle-aware navigation, procedural outfits and event-triggered ragdolls.
 tags: [Python, Blender API, Pathfinding, Ragdoll physics]
 stats:
@@ -18,9 +19,7 @@ coverAlt: A busy city intersection populated with iCrowds
 gallery:
   - { src: ../../assets/projects/icrowds/distribution-ui.webp, alt: 'Crowd distribution around an obstacle, with the iCrowds panel: density, minimum spacing, seed and weight-paint control' }
   - { src: ../../assets/projects/icrowds/queue-path.webp, alt: 'A queue drawn with a curve, flowing through a gate' }
-  - { src: ../../assets/projects/icrowds/night-street.webp, alt: 'Pedestrians in a rainy night street scene' }
-  - { src: ../../assets/projects/icrowds/stadium.webp, alt: 'A full stadium crowd' }
-  - { src: ../../assets/projects/icrowds/ragdolls.webp, alt: 'iCrowds 2: the ragdoll physics system' }
+  - { src: ../../assets/projects/icrowds/night-street.webp, alt: 'Pedestrians on a dark, wet city street' }
 videos:
   - { id: QRKDR6zPRIY, title: 'iCrowds 2 — the ragdoll system' }
   - { id: zrHNITv1fE0, title: 'iCrowds trailer — realistic 3D crowd animation in Blender' }
@@ -42,7 +41,7 @@ Market) for Blender 4.5, rendering in both Cycles and EEVEE.
 
 Agents are scattered over any surface with controls for density, minimum spacing and seed, and can be
 painted in or out with a weight-paint mask. Obstacles are respected, so a crowd parts around them — like the
-helicopter in the gallery.
+helicopter in the gallery. Stadium stands, parks, streets and queues are all built the same way.
 
 ### Paths and navigation
 

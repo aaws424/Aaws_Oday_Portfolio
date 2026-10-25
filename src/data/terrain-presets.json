@@ -110,66 +110,6 @@
     "seaLevel": 0
   },
   {
-    "key": "desert_canyon",
-    "name": "Desert Canyon",
-    "description": "A sandstone plateau cut by a network of slot canyons along its own drainage",
-    "layers": [
-      {
-        "type": "NOISE",
-        "name": "Noise",
-        "sim": false
-      },
-      {
-        "type": "DOMAIN_WARP",
-        "name": "Domain Warp",
-        "sim": false
-      },
-      {
-        "type": "NORMALIZE",
-        "name": "Normalize",
-        "sim": false
-      },
-      {
-        "type": "NOISE",
-        "name": "Noise",
-        "sim": false
-      },
-      {
-        "type": "REMAP",
-        "name": "Remap",
-        "sim": false
-      },
-      {
-        "type": "TERRACE",
-        "name": "Terrace",
-        "sim": false
-      },
-      {
-        "type": "THERMAL",
-        "name": "Thermal Erosion",
-        "sim": true
-      },
-      {
-        "type": "STREAM_POWER",
-        "name": "Stream Power Erosion",
-        "sim": true
-      },
-      {
-        "type": "NORMALIZE",
-        "name": "Normalize",
-        "sim": false
-      }
-    ],
-    "grid": 1024,
-    "generateSeconds": 1.52,
-    "heightScale": 0.2,
-    "heightRange": [
-      0,
-      0.9999999403953552
-    ],
-    "seaLevel": 0
-  },
-  {
     "key": "island",
     "name": "Volcanic Island",
     "description": "Radial island falloff, droplet erosion, flat sea floor",
