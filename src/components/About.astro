@@ -1,0 +1,109 @@
+---
+import { focusAreas, site } from '../data/site';
+---
+
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="container grid">
+    <div class="intro">
+      <p class="eyebrow"><span class="idx">01</span> / About</p>
+      <h2 id="about-title">I'm the artist who writes the tools.</h2>
+    </div>
+    <div class="text">
+      <p class="statement">
+        I'm a technical 3D artist and software developer based in {site.location}, specializing in procedural
+        generation and workflow automation. I engineer complex systems with Blender's Python API, Geometry Nodes and
+        GPU compute shaders to streamline 3D production pipelines.
+      </p>
+      <p>
+        At Parametra I build custom add-ons that extend core software and remove manual bottlenecks from artist
+        pipelines, and I integrate local LLMs and AI image generation into PBR material workflows. Since 2022 I've also
+        been publishing technical Blender tutorials that break down the math behind advanced Geometry Nodes setups.
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <ul class="focus">
+      {
+        focusAreas.map((area, i) => (
+          <li>
+            <span class="focus-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{area.title}</h3>
+            <p>{area.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 2rem 4rem;
+  }
+
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: 5fr 7fr;
+    }
+  }
+
+  .idx {
+    color: var(--text-dim);
+  }
+
+  h2 {
+    margin-top: 1rem;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+  }
+
+  .text {
+    display: grid;
+    gap: 1.25rem;
+    color: var(--text-muted);
+    align-content: end;
+  }
+
+  .statement {
+    color: var(--text);
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    line-height: 1.55;
+  }
+
+  .focus {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1px;
+    margin-top: clamp(3rem, 7vw, 5rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .focus li {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    padding: 1.6rem;
+    background: var(--bg);
+  }
+
+  .focus-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  .focus h3 {
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+
+  .focus p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+</style>

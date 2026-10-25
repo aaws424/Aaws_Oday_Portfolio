@@ -1,0 +1,102 @@
+---
+import { site } from '../data/site';
+import { withBase } from '../lib/url';
+import Logo from './Logo.astro';
+
+const nav = [
+  { label: 'Work', href: withBase('/#work') },
+  { label: 'Experience', href: withBase('/#experience'), wideOnly: true },
+  { label: 'Skills', href: withBase('/#skills'), wideOnly: true },
+  { label: 'Contact', href: withBase('/#contact') },
+];
+---
+
+<header class="site-header" data-header>
+  <div class="container bar">
+    <a class="brand" href={withBase('/')} aria-label={`${site.name} — home`}>
+      <Logo />
+      <span>{site.name}</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        {
+          nav.map((item) => (
+            <li class:list={{ 'wide-only': item.wideOnly }}>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  if (header) {
+    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    height: var(--header-h);
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.3s var(--ease),
+      border-color 0.3s var(--ease);
+  }
+
+  .site-header.is-scrolled {
+    background: rgba(10, 12, 15, 0.78);
+    border-bottom-color: var(--line);
+    backdrop-filter: blur(14px) saturate(1.2);
+  }
+
+  .bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+
+  ul {
+    display: flex;
+    gap: clamp(0.25rem, 2vw, 1.5rem);
+    list-style: none;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    transition: color 0.2s var(--ease);
+  }
+
+  nav a:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 640px) {
+    .wide-only {
+      display: none;
+    }
+  }
+</style>

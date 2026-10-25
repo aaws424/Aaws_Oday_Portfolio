@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Contact from '../components/Contact.astro';
+import { getProjects } from '../lib/projects';
+
+const projects = await getProjects();
+---
+
+<Base>
+  <Hero />
+  <About />
+
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="container">
+      <SectionHeading index="02" label="Work" title="Selected projects" id="work-title">
+        <p>Add-ons, simulation systems and native tools — from GPU terrain erosion to procedural cities and crowds.</p>
+      </SectionHeading>
+      <div class="work-grid">
+        {projects.map((project, i) => <ProjectCard project={project} index={i + 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <Experience />
+  <Skills />
+  <Contact />
+</Base>
+
+<style>
+  .work-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .work-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,57 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { skills } from '../data/site';
+---
+
+<section class="section" id="skills" aria-labelledby="skills-title">
+  <div class="container">
+    <SectionHeading index="04" label="Toolkit" title="Languages, software and libraries" id="skills-title" />
+    <div class="groups">
+      {
+        skills.map((group) => (
+          <div class="group">
+            <h3>{group.group}</h3>
+            <ul class="chips">
+              {group.items.map((item) => (
+                <li class="chip">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .group {
+    display: grid;
+    gap: 1.1rem;
+    align-content: start;
+    padding: 1.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+  }
+
+  h3 {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .chip {
+    font-size: 0.8rem;
+    color: var(--text);
+    border-color: var(--line-strong);
+  }
+</style>

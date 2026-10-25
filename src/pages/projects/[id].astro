@@ -1,0 +1,388 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import ProjectArt from '../../components/ProjectArt.astro';
+import { getProjects } from '../../lib/projects';
+import { withBase } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { id: project.id },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
+---
+
+<Base title={data.title} description={data.summary}>
+  <article>
+    <header class="container head">
+      <a class="back" href={withBase('/#work')}><span aria-hidden="true">←</span> All work</a>
+      <p class="eyebrow">{data.period} · {data.role}</p>
+      <h1>{data.title}</h1>
+      <p class="lede">{data.summary}</p>
+      <ul class="chips">
+        {data.tags.map((tag) => <li class="chip">{tag}</li>)}
+      </ul>
+      {
+        data.links && (
+          <div class="links">
+            {data.links.map((link, i) => (
+              <a
+                class:list={['btn', i === 0 ? 'btn-primary' : 'btn-ghost']}
+                href={resolve(link.url)}
+                {...(link.url.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                {link.label} <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    <div class="container">
+      <figure class="cover">
+        {
+          data.cover ? (
+            <Image
+              src={data.cover}
+              alt={data.coverAlt ?? data.title}
+              widths={[800, 1200, 1800]}
+              sizes="(min-width: 1200px) 1120px, 100vw"
+              loading="eager"
+            />
+          ) : (
+            <ProjectArt seed={project.id} />
+          )
+        }
+      </figure>
+
+      {
+        data.stats && (
+          <dl class="stats">
+            {data.stats.map((stat) => (
+              <div>
+                <dt>{stat.label}</dt>
+                <dd>{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+
+      <div class="layout">
+        <aside class="facts">
+          <dl>
+            <div><dt>Role</dt><dd>{data.role}</dd></div>
+            <div><dt>When</dt><dd>{data.period}</dd></div>
+            <div><dt>Stack</dt><dd>{data.tags.join(', ')}</dd></div>
+          </dl>
+        </aside>
+
+        <div class="content">
+          <h2>Highlights</h2>
+          <ul class="highlights">
+            {data.highlights.map((item) => <li>{item}</li>)}
+          </ul>
+          <div class="prose">
+            <Content />
+          </div>
+
+          {
+            data.youtube && (
+              <div class="video">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${data.youtube}`}
+                  title={`${data.title} — video`}
+                  loading="lazy"
+                  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                  allowfullscreen
+                />
+              </div>
+            )
+          }
+
+          {
+            data.gallery && (
+              <div class="gallery">
+                {data.gallery.map((item) => (
+                  <figure>
+                    <Image src={item.src} alt={item.alt} widths={[600, 1000]} sizes="(min-width: 900px) 50vw, 100vw" />
+                    <figcaption>{item.alt}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    <nav class="container next" aria-label="Next project">
+      <a href={withBase(`/projects/${next.id}/`)}>
+        <span class="eyebrow">Next project</span>
+        <span class="next-title">{next.data.title} <span aria-hidden="true">→</span></span>
+      </a>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .head {
+    padding-top: calc(var(--header-h) + clamp(2.5rem, 7vw, 5rem));
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .back {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .back:hover {
+    color: var(--text);
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+
+  .lede {
+    max-width: 760px;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: var(--text-muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .cover {
+    margin: 0;
+    aspect-ratio: 16 / 8;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #0e1216;
+  }
+
+  .cover :global(img),
+  .cover :global(svg) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    margin: 1.25rem 0 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .stats div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.25rem;
+    padding: 1.4rem 1.5rem;
+    background: var(--bg);
+  }
+
+  .stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .stats dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .layout {
+    display: grid;
+    gap: 2.5rem 4rem;
+    padding-block: clamp(3rem, 7vw, 5rem);
+  }
+
+  @media (min-width: 900px) {
+    .layout {
+      grid-template-columns: 260px 1fr;
+    }
+
+    .facts {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+      align-self: start;
+    }
+  }
+
+  .facts dl {
+    display: grid;
+    gap: 1.25rem;
+    margin: 0;
+  }
+
+  .facts dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .facts dd {
+    margin: 0.3rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .content {
+    max-width: 760px;
+  }
+
+  .content h2,
+  .prose :global(h2) {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .highlights {
+    display: grid;
+    gap: 0.9rem;
+    list-style: none;
+  }
+
+  .highlights li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--text-muted);
+  }
+
+  .highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 8px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .prose :global(h2) {
+    margin-top: 3rem;
+  }
+
+  .prose :global(p) {
+    color: var(--text-muted);
+    margin-bottom: 1.1rem;
+  }
+
+  .prose :global(strong) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .prose :global(code),
+  .highlights :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 0.1em 0.35em;
+    border-radius: 5px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .prose :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .video {
+    margin-top: 3rem;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  .video iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .gallery {
+    display: grid;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  @media (min-width: 700px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .gallery figure {
+    margin: 0;
+  }
+
+  .gallery :global(img) {
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+  }
+
+  .gallery figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  .next {
+    padding-bottom: clamp(4rem, 9vw, 7rem);
+  }
+
+  .next a {
+    display: grid;
+    gap: 0.75rem;
+    padding: 2.5rem 0 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .next-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    transition: color 0.2s var(--ease);
+  }
+
+  .next a:hover .next-title {
+    color: var(--accent);
+  }
+</style>

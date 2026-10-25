@@ -1,0 +1,144 @@
+---
+/**
+ * Generated topographic artwork used as a project cover until a real render is added.
+ * Deterministic per `seed`, computed at build time (no JavaScript shipped).
+ */
+interface Props {
+  seed: string;
+  label?: string;
+}
+const { seed, label } = Astro.props;
+
+function hash(str: string) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function mulberry32(seed: number) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const W = 800;
+const H = 500;
+const rand = mulberry32(hash(seed));
+const peaks = Array.from({ length: 2 + Math.floor(rand() * 2) }, () => ({
+  x: 150 + rand() * (W - 300),
+  y: 120 + rand() * (H - 240),
+  rings: 10 + Math.floor(rand() * 8),
+  step: 15 + rand() * 9,
+  stretch: 0.7 + rand() * 0.6,
+  rot: rand() * Math.PI,
+  waves: Array.from({ length: 3 }, () => ({
+    f: 2 + Math.floor(rand() * 4),
+    a: 0.03 + rand() * 0.08,
+    p: rand() * Math.PI * 2,
+  })),
+}));
+
+const rings = peaks.flatMap((pk) =>
+  Array.from({ length: pk.rings }, (_, k) => {
+    const r = 8 + k * pk.step;
+    const pts: string[] = [];
+    for (let s = 0; s < 96; s++) {
+      const t = (s / 96) * Math.PI * 2;
+      let m = 1;
+      for (const w of pk.waves) m += w.a * Math.sin(w.f * t + w.p + k * 0.25);
+      const lx = Math.cos(t) * r * m * pk.stretch;
+      const ly = Math.sin(t) * r * m;
+      const x = pk.x + lx * Math.cos(pk.rot) - ly * Math.sin(pk.rot);
+      const y = pk.y + lx * Math.sin(pk.rot) + ly * Math.cos(pk.rot);
+      pts.push(`${x.toFixed(1)} ${y.toFixed(1)}`);
+    }
+    return { d: `M${pts.join('L')}Z`, major: k % 4 === 0, fade: 1 - k / pk.rings };
+  }),
+);
+
+const id = `art-${hash(seed).toString(36)}`;
+---
+
+<svg class="project-art" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <radialGradient id={`${id}-glow`} cx={peaks[0].x / W} cy={peaks[0].y / H} r="0.7">
+      <stop offset="0" stop-color="#ff7a3d" stop-opacity="0.16"></stop>
+      <stop offset="1" stop-color="#ff7a3d" stop-opacity="0"></stop>
+    </radialGradient>
+    <pattern id={`${id}-grid`} width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.035"></path>
+    </pattern>
+  </defs>
+  <rect width={W} height={H} fill="#0e1216"></rect>
+  <rect width={W} height={H} fill={`url(#${id}-grid)`}></rect>
+  <rect width={W} height={H} fill={`url(#${id}-glow)`}></rect>
+  {
+    rings.map((ring) => (
+      <path
+        d={ring.d}
+        class:list={['ring', { major: ring.major }]}
+        stroke-opacity={(ring.major ? 0.25 + 0.45 * ring.fade : 0.06 + 0.2 * ring.fade).toFixed(2)}
+      />
+    ))
+  }
+  {
+    peaks.map((pk) => (
+      <g class="marker">
+        <circle cx={pk.x} cy={pk.y} r="3" />
+        <path d={`M${pk.x - 12} ${pk.y}h8m8 0h8M${pk.x} ${pk.y - 12}v8m0 8v8`} />
+      </g>
+    ))
+  }
+  {
+    label && (
+      <text x="28" y={H - 28} class="label">
+        {label}
+      </text>
+    )
+  }
+</svg>
+
+<style>
+  .project-art {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ring {
+    fill: none;
+    stroke: #a0a9b5;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .ring.major {
+    stroke: #ff7a3d;
+    stroke-width: 1.4;
+  }
+
+  .marker circle {
+    fill: #ff7a3d;
+  }
+
+  .marker path {
+    stroke: #ff7a3d;
+    stroke-width: 1.2;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    fill: #6c7683;
+    text-transform: uppercase;
+  }
+</style>

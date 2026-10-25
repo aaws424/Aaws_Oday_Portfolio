@@ -1,0 +1,38 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  title: string;
+  id?: string;
+}
+const { index, label, title, id } = Astro.props;
+---
+
+<header class="section-heading">
+  <p class="eyebrow"><span class="idx">{index}</span> / {label}</p>
+  <h2 id={id}>{title}</h2>
+  <slot />
+</header>
+
+<style>
+  .section-heading {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    max-width: 760px;
+  }
+
+  .idx {
+    color: var(--text-dim);
+  }
+
+  h2 {
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+  }
+
+  .section-heading :global(p:not(.eyebrow)) {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 620px;
+  }
+</style>

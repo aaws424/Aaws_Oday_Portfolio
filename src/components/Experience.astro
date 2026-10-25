@@ -1,0 +1,103 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { experience } from '../data/site';
+---
+
+<section class="section" id="experience" aria-labelledby="experience-title">
+  <div class="container">
+    <SectionHeading index="03" label="Experience" title="Where I've been building" id="experience-title" />
+    <ol class="timeline">
+      {
+        experience.map((job) => (
+          <li>
+            <p class="period">{job.period}</p>
+            <div class="detail">
+              <h3>
+                {job.role} <span class="at">· {job.company}</span>
+              </h3>
+              <ul>
+                {job.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+              {job.link && (
+                <a class="link" href={job.link.url} target="_blank" rel="noopener noreferrer">
+                  {job.link.label} <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .timeline > li {
+    display: grid;
+    gap: 0.75rem 3rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (min-width: 760px) {
+    .timeline > li {
+      grid-template-columns: 220px 1fr;
+    }
+  }
+
+  .period {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    padding-top: 0.35rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .at {
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  .detail ul {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    list-style: none;
+    color: var(--text-muted);
+    max-width: 720px;
+  }
+
+  .detail li {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+
+  .detail li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 7px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>

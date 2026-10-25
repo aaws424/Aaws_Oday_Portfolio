@@ -1,0 +1,156 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import ProjectArt from './ProjectArt.astro';
+import { withBase } from '../lib/url';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { data } = project;
+const wide = data.featured;
+const number = String(index).padStart(2, '0');
+---
+
+<article class:list={['card', { wide }]}>
+  <a class="card-link" href={withBase(`/projects/${project.id}/`)}>
+    <div class="media">
+      {
+        data.cover ? (
+          <Image
+            src={data.cover}
+            alt={data.coverAlt ?? data.title}
+            widths={[480, 800, 1200]}
+            sizes={wide ? '(min-width: 900px) 640px, 100vw' : '(min-width: 900px) 560px, 100vw'}
+          />
+        ) : (
+          <ProjectArt seed={project.id} label={`${number} — ${data.title}`} />
+        )
+      }
+    </div>
+    <div class="body">
+      <p class="meta"><span class="num">{number}</span>{data.period} · {data.role}</p>
+      <h3>{data.title}</h3>
+      <p class="summary">{data.summary}</p>
+      <ul class="chips">
+        {data.tags.map((tag) => <li class="chip">{tag}</li>)}
+      </ul>
+      <span class="cta">View project <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+    overflow: hidden;
+    transition:
+      border-color 0.3s var(--ease),
+      background-color 0.3s var(--ease),
+      transform 0.3s var(--ease);
+  }
+
+  .card:hover {
+    border-color: var(--line-strong);
+    background: var(--surface);
+    transform: translateY(-3px);
+  }
+
+  .card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .media {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background: #0e1216;
+  }
+
+  .media :global(img),
+  .media :global(svg) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .card:hover .media :global(img),
+  .card:hover .media :global(svg) {
+    transform: scale(1.03);
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    flex: 1;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--text-dim);
+  }
+
+  .num {
+    color: var(--accent);
+    margin-right: 0.75rem;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+  }
+
+  .summary {
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+
+  .cta {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .card:hover .cta {
+    color: var(--accent);
+  }
+
+  @media (min-width: 900px) {
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .wide .card-link {
+      flex-direction: row;
+    }
+
+    .wide .media {
+      flex: 0 0 58%;
+      aspect-ratio: auto;
+      min-height: 380px;
+      border-bottom: 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .wide .body {
+      justify-content: center;
+      padding: 2.5rem;
+    }
+
+    .wide h3 {
+      font-size: 2.3rem;
+    }
+  }
+</style>

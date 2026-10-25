@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/url';
+---
+
+<Base title="Page not found">
+  <section class="container lost">
+    <p class="eyebrow">404 · Eroded away</p>
+    <h1>This page washed downstream.</h1>
+    <p class="muted">The link may be old, or the page has moved.</p>
+    <a class="btn btn-primary" href={withBase('/')}>Back to the homepage <span class="arrow" aria-hidden="true">→</span></a>
+  </section>
+</Base>
+
+<style>
+  .lost {
+    min-height: 80svh;
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 1.25rem;
+    padding-top: var(--header-h);
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+  }
+</style>
