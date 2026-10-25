@@ -13,6 +13,10 @@ const projects = defineCollection({
       order: z.number(),
       /** Wide card on the home page. */
       featured: z.boolean().default(false),
+      /** `side`: shown as a compact card below the main work grid. */
+      kind: z.enum(['main', 'side']).default('main'),
+      /** One-line context shown on the card, e.g. why a side project exists. */
+      note: z.string().optional(),
       summary: z.string(),
       tags: z.array(z.string()),
       highlights: z.array(z.string()),

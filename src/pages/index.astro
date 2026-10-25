@@ -4,12 +4,15 @@ import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import SideProject from '../components/SideProject.astro';
 import Experience from '../components/Experience.astro';
 import Skills from '../components/Skills.astro';
 import Contact from '../components/Contact.astro';
 import { getProjects } from '../lib/projects';
 
 const projects = await getProjects();
+const mainProjects = projects.filter((p) => p.data.kind !== 'side');
+const sideProjects = projects.filter((p) => p.data.kind === 'side');
 ---
 
 <Base>
@@ -19,11 +22,21 @@ const projects = await getProjects();
   <section class="section" id="work" aria-labelledby="work-title">
     <div class="container">
       <SectionHeading index="02" label="Work" title="Selected projects" id="work-title">
-        <p>Add-ons, simulation systems and native tools — from GPU terrain erosion to procedural cities and crowds.</p>
+        <p>Add-ons, simulation systems and native tools — from GPU terrain erosion to procedural cities, crowds and traffic.</p>
       </SectionHeading>
       <div class="work-grid">
-        {projects.map((project, i) => <ProjectCard project={project} index={i + 1} />)}
+        {mainProjects.map((project, i) => <ProjectCard project={project} index={i + 1} />)}
       </div>
+      {
+        sideProjects.length > 0 && (
+          <div class="side-projects">
+            <p class="eyebrow">Also built</p>
+            {sideProjects.map((project) => (
+              <SideProject project={project} />
+            ))}
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -42,5 +55,11 @@ const projects = await getProjects();
     .work-grid {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
+
+  .side-projects {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
   }
 </style>

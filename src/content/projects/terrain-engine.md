@@ -2,7 +2,7 @@
 title: Terrain Engine
 role: Add-on Developer · Personal project
 period: '2026'
-order: 2
+order: 1
 featured: true
 summary: A Gaea / World Machine-style terrain generator that lives inside Blender — a non-destructive layer stack of generators, shaping operations and erosion simulations, running entirely in GPU compute shaders.
 tags: [Python, GLSL compute, Blender gpu module, Simulation]

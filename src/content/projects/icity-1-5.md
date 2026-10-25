@@ -2,7 +2,7 @@
 title: iCity 1.5
 role: Blender Add-on Developer
 period: Summer 2024
-order: 5
+order: 2
 summary: Procedural city blocks for Blender — parcel subdivision, algorithmic house fitting, context-aware yard scattering and lot-specific fences and walls.
 tags: [Python, Blender API, Procedural generation, Scattering]
 highlights:

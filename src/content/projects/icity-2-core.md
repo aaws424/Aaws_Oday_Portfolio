@@ -2,7 +2,7 @@
 title: iCity 2.0 Core Backend
 role: C++ Developer
 period: Summer 2026
-order: 6
+order: 5
 summary: A native C++ backend for procedural city generation — computational geometry that turns city bounds into blocks, lots and efficiently packed layouts.
 tags: [C++, OpenMesh, Straight skeleton, Shape packing]
 highlights:

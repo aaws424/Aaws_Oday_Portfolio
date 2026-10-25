@@ -2,8 +2,7 @@
 title: iCrowds
 role: Blender Add-on Developer & Designer
 period: Winter 2026
-order: 1
-featured: true
+order: 3
 summary: Crowd simulation for Blender — procedural placement for stadiums, streets and queues, path-drawn crowds, obstacle-aware navigation, procedural outfits and event-triggered ragdolls.
 tags: [Python, Blender API, Pathfinding, Ragdoll physics]
 stats:

@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { focusAreas, site } from '../data/site';
+import { withBase } from '../lib/url';
 
 // Optional portrait: drop a photo at src/assets/me.jpg (or .png / .webp) and it appears here.
 const photos = import.meta.glob<{ default: ImageMetadata }>('../assets/me.{jpg,jpeg,png,webp}', { eager: true });
@@ -12,7 +13,7 @@ const photo = Object.values(photos)[0]?.default;
     <div class="intro">
       {
         photo && (
-          <Image class="portrait" src={photo} alt={`Portrait of ${site.name}`} widths={[160, 320]} sizes="160px" />
+          <Image class="portrait" src={photo} alt={`Portrait of ${site.name}`} widths={[180, 360]} sizes="180px" />
         )
       }
       <p class="eyebrow"><span class="idx">01</span> / About</p>
@@ -28,6 +29,11 @@ const photo = Object.values(photos)[0]?.default;
         At Parametra I build custom add-ons that extend core software and remove manual bottlenecks from artist
         pipelines, and I integrate local LLMs and AI image generation into PBR material workflows. Since 2022 I've also
         been publishing technical Blender tutorials that break down the math behind advanced Geometry Nodes setups.
+      </p>
+      <p>
+        My path here is a little unusual: I graduated in veterinary medicine in 2024, while already making Blender
+        tutorials and tools. The two worlds still meet in <a href={withBase('/projects/pixelscan-wsi/')}>PixelScan WSI</a>,
+        the microscope imaging app I built and shipped on the side.
       </p>
     </div>
   </div>
@@ -64,8 +70,8 @@ const photo = Object.values(photos)[0]?.default;
   }
 
   .portrait {
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
     margin-bottom: 1.75rem;
     border-radius: 50%;
     object-fit: cover;
@@ -83,6 +89,12 @@ const photo = Object.values(photos)[0]?.default;
     gap: 1.25rem;
     color: var(--text-muted);
     align-content: end;
+  }
+
+  .text a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .statement {

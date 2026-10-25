@@ -2,7 +2,7 @@
 title: iCars
 role: Blender Add-on Developer & Designer
 period: Winter 2025
-order: 3
+order: 4
 summary: Traffic simulation, car rigging and crash physics for Blender — real-time urban traffic synchronized with iCity, drifting with dynamic tire marks, and a custom vehicle physics model.
 tags: [Python, Blender API, Vehicle physics, Traffic simulation]
 stats:

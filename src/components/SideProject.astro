@@ -1,0 +1,114 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import ProjectArt from './ProjectArt.astro';
+import { withBase } from '../lib/url';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const href = withBase(`/projects/${project.id}/`);
+---
+
+<article class="side">
+  <a class="media" href={href} tabindex="-1" aria-hidden="true">
+    {data.cover ? <Image src={data.cover} alt="" widths={[320, 640]} sizes="260px" /> : <ProjectArt seed={project.id} />}
+  </a>
+  <div class="body">
+    <p class="meta">{data.note ?? 'Side project'} · {data.period}</p>
+    <h3><a href={href}>{data.title}</a></h3>
+    <p class="summary">{data.summary}</p>
+    <ul class="links">
+      {
+        data.links?.map((link) => (
+          <li>
+            <a href={link.url} target="_blank" rel="noopener noreferrer">
+              {link.label} <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+        ))
+      }
+      <li><a href={href}>Details <span aria-hidden="true">→</span></a></li>
+    </ul>
+  </div>
+</article>
+
+<style>
+  .side {
+    display: grid;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-elev);
+  }
+
+  @media (min-width: 700px) {
+    .side {
+      grid-template-columns: 260px 1fr;
+      gap: 1.75rem;
+    }
+  }
+
+  .media {
+    display: block;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: #ebe8e1;
+  }
+
+  .media :global(img),
+  .media :global(svg) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .body {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent-text);
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  h3 a:hover {
+    color: var(--accent-text);
+  }
+
+  .summary {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 640px;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    margin-top: 0.25rem;
+    list-style: none;
+  }
+
+  .links a {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .links a:hover {
+    color: var(--accent-text);
+  }
+</style>

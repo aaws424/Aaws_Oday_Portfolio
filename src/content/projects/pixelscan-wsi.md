@@ -2,7 +2,9 @@
 title: PixelScan WSI
 role: Software Developer
 period: Summer 2026
-order: 4
+order: 6
+kind: side
+note: A side project from my veterinary background
 summary: Whole-slide imaging for the microscope you already have — a C++ desktop app that stitches a live camera feed into gigapixel slides, with a viewer, measurements and SVS / OME-TIFF export. Shipped on the Microsoft Store.
 tags: [C++, OpenCV, libvips, Microsoft Store]
 stats:
@@ -23,13 +25,15 @@ gallery:
   - { src: ../../assets/projects/pixelscan-wsi/export.webp, alt: 'Export to SVS, OME-TIFF or pyramidal TIFF with the file size estimated first' }
   - { src: ../../assets/projects/pixelscan-wsi/progress.webp, alt: 'Long stitching and export jobs with progress, time left and cancel' }
 links:
-  - { label: 'Get it on the Microsoft Store', url: 'https://apps.microsoft.com/detail/9NVD64N8L7BS' }
   - { label: 'pixelscanwsi.com', url: 'https://pixelscanwsi.com' }
+  - { label: 'Microsoft Store', url: 'https://apps.microsoft.com/detail/9NVD64N8L7BS' }
 ---
 
 ## Overview
 
-Dedicated slide scanners cost tens of thousands of dollars. PixelScan WSI turns a brightfield microscope, a
+PixelScan WSI is a side project that comes from my veterinary training. Digitising glass slides — H&E,
+special stains, IHC — is everyday work in pathology teaching and research, but dedicated slide scanners cost
+tens of thousands of dollars. PixelScan WSI turns a brightfield microscope, a
 camera and a Windows PC into one: move the slide by hand and every frame is matched and stitched into a single
 large slide, which can be viewed, measured, annotated and exported in formats that open directly in QuPath,
 OpenSlide, ASAP and OMERO.
