@@ -10,10 +10,8 @@ highlights:
   - Engineered a procedural city generation backend in C++, using OpenMesh to handle complex geometry processing.
   - Implemented straight skeleton algorithms for automated, math-driven urban block subdivision and lot generation.
   - Researched and integrated 2D shape packing algorithms to optimize spatial distribution within generated city bounds.
-# To add media: put renders in src/assets/projects/icity-2-core/ and uncomment:
-# cover: ../../assets/projects/icity-2-core/cover.jpg
-# coverAlt: Procedurally subdivided city blocks
-# youtube: VIDEO_ID
+videos:
+  - { id: 7gK3Qj6XK60, title: 'iCity 2 Is Coming — teaser' }
 ---
 
 ## Overview
@@ -22,3 +20,21 @@ The 2.0 core moves iCity's city generation onto a native C++ foundation built fo
 City bounds are split into blocks and lots with straight skeleton algorithms, so subdivision follows the
 shape of each block instead of a fixed grid. 2D shape packing then distributes content inside the
 generated bounds as efficiently as possible.
+
+## Breakdown
+
+### Why C++
+
+City generation is geometry-heavy: offsetting polygons, splitting faces, testing containment and overlap
+thousands of times per block. A native backend built on OpenMesh's half-edge mesh structures puts that work in
+compiled code.
+
+### Straight-skeleton subdivision
+
+The straight skeleton of a block polygon — the trace of its edges shrinking inward at equal speed — gives
+natural lot boundaries that follow the street frontage, for convex and concave blocks alike.
+
+### Shape packing
+
+Footprints and features are packed into the generated bounds with 2D packing algorithms, maximizing use of
+the available area while keeping the layout plausible.

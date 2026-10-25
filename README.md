@@ -1,8 +1,9 @@
 # Aaws Oday — Portfolio
 
 Personal portfolio built with [Astro](https://astro.build) and [Three.js](https://threejs.org).
-The home page hero is a live, in-browser port of the droplet erosion from **Terrain Engine**
-(my GPU terrain add-on for Blender), with Shaded / Flow / Wear data-map views.
+The home page hero renders real output of **Terrain Engine** (my GPU terrain add-on for Blender):
+six presets exported headless from Blender, with a before → after erosion slider and
+Color / Flow / Erosion / Clay views of the add-on's data maps.
 
 ## Run it locally
 
@@ -13,8 +14,9 @@ npm run build      # production build into dist/
 npm run preview    # serve the production build
 ```
 
-Add `?still` to the URL (e.g. `http://localhost:4321/?still`) to skip the erosion animation and
-show the finished terrain immediately — handy for screenshots.
+The dev site lives at `http://localhost:4321/Aaws_Oday_Portfolio/`. Hero URL options:
+`?still` (no animation — finished terrain, for screenshots), `?preset=island` (any preset key in
+`src/data/terrain-presets.json`) and `?mode=flow` (`color`, `flow`, `erosion`, `clay`).
 
 ## Where to edit things
 
@@ -23,10 +25,13 @@ show the finished terrain immediately — handy for screenshots.
 | Name, email, location, social links (empty `''` hides a link) | `src/data/site.ts` |
 | Focus areas, experience, skills | `src/data/site.ts` |
 | Projects (one Markdown file each) | `src/content/projects/*.md` |
-| Hero text | `src/components/Hero.astro` |
+| Hero text and viewer controls | `src/components/Hero.astro` |
 | About text | `src/components/About.astro` |
+| Your photo (optional) | put it at `src/assets/me.jpg` (or `.png` / `.webp`) — it appears in About |
 | Colors and fonts | `src/styles/global.css` (the `:root` block) |
-| Erosion hero (terrain stack, erosion parameters, shader) | `src/scripts/terrain.ts` |
+| Terrain viewer (shaders, lighting, camera) | `src/scripts/terrain.ts` |
+| Terrain presets shown in the hero | `public/terrain/<preset>/` + `src/data/terrain-presets.json` |
+| Link-preview image | `public/og.jpg` (1200 × 630) |
 
 ### Adding a project
 
@@ -54,6 +59,23 @@ Longer write-up in Markdown.
 ```
 
 Until a project has a `cover`, the site draws a generated topographic placeholder for it.
+
+Each project's frontmatter also takes `stats` (key numbers), `gallery` (images; `alt` is the caption),
+`videos` (YouTube `id` + `title`; shown as click-to-play thumbnails) and `links`.
+
+### Updating the hero terrains from Terrain Engine
+
+The hero shows real add-on output. To regenerate it (e.g. after changing the add-on or picking other presets),
+with the add-on installed and enabled in Blender:
+
+```sh
+# 1. generate + export (and render Cycles shots) headless — does not touch any open Blender session
+"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe" -b --python tools/terrain-engine/te_export.py -- C:/tmp/te_out 1024 1 ALPINE SWISS_ALPS DESERT_CANYON ISLAND BADLANDS CANYON
+# 2. convert to web textures + src/data/terrain-presets.json
+node tools/terrain-engine/te_to_web.mjs . C:/tmp/te_out public/terrain src/data/terrain-presets.json ALPINE SWISS_ALPS DESERT_CANYON ISLAND BADLANDS CANYON
+```
+
+Preset keys are the ones in the add-on's `presets.py`. The first preset in the list is the one shown on load.
 
 ### Adding renders
 

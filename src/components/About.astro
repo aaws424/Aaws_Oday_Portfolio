@@ -1,10 +1,20 @@
 ---
+import { Image } from 'astro:assets';
 import { focusAreas, site } from '../data/site';
+
+// Optional portrait: drop a photo at src/assets/me.jpg (or .png / .webp) and it appears here.
+const photos = import.meta.glob<{ default: ImageMetadata }>('../assets/me.{jpg,jpeg,png,webp}', { eager: true });
+const photo = Object.values(photos)[0]?.default;
 ---
 
 <section class="section" id="about" aria-labelledby="about-title">
   <div class="container grid">
     <div class="intro">
+      {
+        photo && (
+          <Image class="portrait" src={photo} alt={`Portrait of ${site.name}`} widths={[160, 320]} sizes="160px" />
+        )
+      }
       <p class="eyebrow"><span class="idx">01</span> / About</p>
       <h2 id="about-title">I'm the artist who writes the tools.</h2>
     </div>
@@ -53,6 +63,16 @@ import { focusAreas, site } from '../data/site';
     color: var(--text-dim);
   }
 
+  .portrait {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 1.75rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffffff;
+    box-shadow: var(--shadow-md);
+  }
+
   h2 {
     margin-top: 1rem;
     font-size: clamp(2.1rem, 5vw, 3.4rem);
@@ -94,7 +114,7 @@ import { focusAreas, site } from '../data/site';
   .focus-num {
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    color: var(--accent);
+    color: var(--accent-text);
   }
 
   .focus h3 {

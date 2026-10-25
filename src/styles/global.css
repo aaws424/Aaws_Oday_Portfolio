@@ -1,17 +1,21 @@
 :root {
-  --bg: #0a0c0f;
-  --bg-elev: #0f1317;
-  --surface: #12171c;
-  --surface-hover: #161c22;
-  --line: #1c232a;
-  --line-strong: #2a333c;
-  --text: #e8ebef;
-  --text-muted: #a0a9b5;
-  --text-dim: #6c7683;
-  --accent: #ff7a3d;
-  --accent-ink: #1a0b03;
-  --accent-soft: rgba(255, 122, 61, 0.12);
-  --flow: #7fd8ff;
+  --bg: #f5f4f0;
+  --bg-elev: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #fbfaf7;
+  --line: #e4e1da;
+  --line-strong: #d3cfc6;
+  --text: #15171a;
+  --text-muted: #4d535b;
+  --text-dim: #7d838b;
+  --accent: #e4570f;
+  /* darker orange for text on light backgrounds (WCAG AA) */
+  --accent-text: #b4430b;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(228, 87, 15, 0.08);
+  --ink: #15171a;
+  --shadow-sm: 0 1px 2px rgba(21, 23, 26, 0.04), 0 2px 8px rgba(21, 23, 26, 0.04);
+  --shadow-md: 0 2px 4px rgba(21, 23, 26, 0.04), 0 12px 32px rgba(21, 23, 26, 0.08);
 
   --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Space Grotesk Variable', 'Inter Variable', system-ui, sans-serif;
@@ -24,7 +28,7 @@
   --header-h: 68px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 *,
@@ -110,7 +114,7 @@ button {
 
 ::selection {
   background: var(--accent);
-  color: var(--accent-ink);
+  color: #ffffff;
 }
 
 :focus-visible {
@@ -141,7 +145,7 @@ button {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .mono {
@@ -179,16 +183,16 @@ button {
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--ink);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: #ff915e;
+  background: var(--accent);
 }
 
 .btn-ghost {
-  background: rgba(10, 12, 15, 0.4);
+  background: rgba(255, 255, 255, 0.7);
   border-color: var(--line-strong);
   color: var(--text);
   backdrop-filter: blur(8px);
@@ -196,7 +200,7 @@ button {
 
 .btn-ghost:hover {
   border-color: var(--text-dim);
-  background: rgba(255, 255, 255, 0.04);
+  background: #ffffff;
 }
 
 .btn .arrow {

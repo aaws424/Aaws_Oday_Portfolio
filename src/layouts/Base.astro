@@ -16,6 +16,7 @@ interface Props {
 const { title, description = site.description } = Astro.props;
 const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.role}`;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(withBase('/og.jpg'), Astro.site).href : undefined;
 ---
 
 <!doctype html>
@@ -28,12 +29,13 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
-    <meta name="theme-color" content="#0a0c0f" />
+    <meta name="theme-color" content="#f5f4f0" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta name="twitter:card" content="summary" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>

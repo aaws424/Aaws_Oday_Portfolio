@@ -10,4 +10,5 @@ export default defineConfig({
   site: 'https://aaws424.github.io',
   base: '/Aaws_Oday_Portfolio',
   integrations: [sitemap()],
+  markdown: { shikiConfig: { theme: 'github-light' } },
 });

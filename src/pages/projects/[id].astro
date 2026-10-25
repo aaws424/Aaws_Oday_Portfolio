@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import ProjectArt from '../../components/ProjectArt.astro';
+import YouTube from '../../components/YouTube.astro';
 import { getProjects } from '../../lib/projects';
 import { withBase } from '../../lib/url';
 
@@ -95,34 +96,39 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
             <Content />
           </div>
 
-          {
-            data.youtube && (
-              <div class="video">
-                <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${data.youtube}`}
-                  title={`${data.title} — video`}
-                  loading="lazy"
-                  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                  allowfullscreen
-                />
-              </div>
-            )
-          }
-
-          {
-            data.gallery && (
-              <div class="gallery">
-                {data.gallery.map((item) => (
-                  <figure>
-                    <Image src={item.src} alt={item.alt} widths={[600, 1000]} sizes="(min-width: 900px) 50vw, 100vw" />
-                    <figcaption>{item.alt}</figcaption>
-                  </figure>
-                ))}
-              </div>
-            )
-          }
         </div>
       </div>
+
+      {
+        data.gallery && (
+          <section class="media" aria-labelledby="gallery-title">
+            <h2 id="gallery-title">Gallery</h2>
+            <div class="gallery">
+              {data.gallery.map((item) => (
+                <figure>
+                  <a href={item.src.src} target="_blank" rel="noopener">
+                    <Image src={item.src} alt={item.alt} widths={[600, 1000, 1400]} sizes="(min-width: 1200px) 560px, (min-width: 700px) 50vw, 100vw" />
+                  </a>
+                  <figcaption>{item.alt}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        data.videos && (
+          <section class="media" aria-labelledby="videos-title">
+            <h2 id="videos-title">Videos</h2>
+            <div class="videos">
+              {data.videos.map((v) => (
+                <YouTube id={v.id} title={v.title} />
+              ))}
+            </div>
+          </section>
+        )
+      }
     </div>
 
     <nav class="container next" aria-label="Next project">
@@ -178,7 +184,7 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     overflow: hidden;
-    background: #0e1216;
+    background: #ebe8e1;
   }
 
   .cover :global(img),
@@ -317,33 +323,29 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
   }
 
   .prose :global(a) {
-    color: var(--accent);
+    color: var(--accent-text);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  .video {
-    margin-top: 3rem;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--radius);
-    overflow: hidden;
-    border: 1px solid var(--line);
+  .media {
+    padding-bottom: clamp(3rem, 7vw, 5rem);
   }
 
-  .video iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
+  .media h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
   }
 
-  .gallery {
+  .gallery,
+  .videos {
     display: grid;
-    gap: 1rem;
-    margin-top: 3rem;
+    gap: 1.75rem 1.25rem;
   }
 
   @media (min-width: 700px) {
-    .gallery {
+    .gallery,
+    .videos {
       grid-template-columns: repeat(2, 1fr);
     }
   }
@@ -352,15 +354,88 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
     margin: 0;
   }
 
-  .gallery :global(img) {
+  .gallery a {
+    display: block;
     border-radius: var(--radius-sm);
     border: 1px solid var(--line);
+    overflow: hidden;
+    background: #ebe8e1;
+  }
+
+  .gallery :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+  }
+
+  .gallery a:hover :global(img) {
+    transform: scale(1.02);
   }
 
   .gallery figcaption {
-    margin-top: 0.5rem;
-    font-size: 0.85rem;
+    margin-top: 0.55rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .prose :global(table) {
+    width: 100%;
+    margin: 0.5rem 0 1.5rem;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .prose :global(th),
+  .prose :global(td) {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+
+  .prose :global(th) {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--text-dim);
+  }
+
+  .prose :global(td) {
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 1.25rem;
+    padding-left: 1.2rem;
+    color: var(--text-muted);
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .prose :global(h3) {
+    font-size: 1.15rem;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .prose :global(pre) {
+    margin: 0 0 1.5rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: #fbfaf7 !important;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+
+  .prose :global(pre code) {
+    padding: 0;
+    border: 0;
+    background: none;
   }
 
   .next {
@@ -383,6 +458,6 @@ const resolve = (url: string) => (url.startsWith('/') ? withBase(url) : url);
   }
 
   .next a:hover .next-title {
-    color: var(--accent);
+    color: var(--accent-text);
   }
 </style>

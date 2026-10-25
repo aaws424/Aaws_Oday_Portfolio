@@ -70,14 +70,14 @@ const id = `art-${hash(seed).toString(36)}`;
 <svg class="project-art" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <defs>
     <radialGradient id={`${id}-glow`} cx={peaks[0].x / W} cy={peaks[0].y / H} r="0.7">
-      <stop offset="0" stop-color="#ff7a3d" stop-opacity="0.16"></stop>
-      <stop offset="1" stop-color="#ff7a3d" stop-opacity="0"></stop>
+      <stop offset="0" stop-color="#e4570f" stop-opacity="0.12"></stop>
+      <stop offset="1" stop-color="#e4570f" stop-opacity="0"></stop>
     </radialGradient>
     <pattern id={`${id}-grid`} width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.035"></path>
+      <path d="M40 0H0V40" fill="none" stroke="#15171a" stroke-opacity="0.05"></path>
     </pattern>
   </defs>
-  <rect width={W} height={H} fill="#0e1216"></rect>
+  <rect width={W} height={H} fill="#efece6"></rect>
   <rect width={W} height={H} fill={`url(#${id}-grid)`}></rect>
   <rect width={W} height={H} fill={`url(#${id}-glow)`}></rect>
   {
@@ -114,22 +114,22 @@ const id = `art-${hash(seed).toString(36)}`;
 
   .ring {
     fill: none;
-    stroke: #a0a9b5;
+    stroke: #6f757c;
     stroke-width: 1;
     vector-effect: non-scaling-stroke;
   }
 
   .ring.major {
-    stroke: #ff7a3d;
+    stroke: #e4570f;
     stroke-width: 1.4;
   }
 
   .marker circle {
-    fill: #ff7a3d;
+    fill: #e4570f;
   }
 
   .marker path {
-    stroke: #ff7a3d;
+    stroke: #e4570f;
     stroke-width: 1.2;
     vector-effect: non-scaling-stroke;
   }
@@ -138,7 +138,7 @@ const id = `art-${hash(seed).toString(36)}`;
     font-family: var(--font-mono);
     font-size: 15px;
     letter-spacing: 0.12em;
-    fill: #6c7683;
+    fill: #7d838b;
     text-transform: uppercase;
   }
 </style>

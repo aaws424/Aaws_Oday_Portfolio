@@ -9,10 +9,12 @@ highlights:
   - Engineered a system to subdivide city blocks and algorithmically test-fit house models to parcels.
   - Designed a context-aware scattering system that procedurally populates yards based on lot and house dimensions.
   - Created a dynamic algorithm that automatically generates realistic, lot-specific fences and walls.
-# To add media: put renders in src/assets/projects/icity-1-5/ and uncomment:
-# cover: ../../assets/projects/icity-1-5/cover.jpg
-# coverAlt: A procedurally generated neighborhood
-# youtube: VIDEO_ID
+cover: ../../assets/projects/icity-1-5/cover.webp
+coverAlt: iCity turning a traced 2D map into a 3D city block
+videos:
+  - { id: pOaYOzt_R6Q, title: 'iCity 1.5 — Google Maps tracing and elevated highways (complete guide)' }
+  - { id: a8mY5xDXUnI, title: 'Behind the scenes of iCity: procedural 3D city design' }
+  - { id: S0wZa-cmhmw, title: 'Exporting an iCity scene from Blender to Unreal Engine' }
 ---
 
 ## Overview
@@ -20,3 +22,20 @@ highlights:
 iCity 1.5 generates residential neighborhoods from city blocks. Blocks are split into parcels, house models
 are test-fitted to each lot, and yards are populated by a scattering system that adapts to the size of the
 lot and the house. Fences and walls are then generated to match each individual lot.
+
+## Breakdown
+
+### Parcels and house fitting
+
+Each block is subdivided into lots, and candidate house models are tested against each lot's shape and
+size so that only buildings that fit are placed — the street keeps its variety without overlaps.
+
+### Context-aware scattering
+
+Yard content is chosen and spaced from the dimensions of the lot and the house footprint, so small lots
+get compact gardens and large ones get room to breathe.
+
+### Fences and walls
+
+Boundaries are generated per lot from its outline, giving every property its own fence or wall instead of
+one repeated asset.

@@ -1,0 +1,312 @@
+[
+  {
+    "key": "alpine",
+    "name": "Alpine Mountains",
+    "description": "Large ridged massifs with fine detail, stream-power valleys, droplet gullies, snow line",
+    "layers": [
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "DOMAIN_WARP",
+        "name": "Domain Warp",
+        "sim": false
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      },
+      {
+        "type": "REMAP",
+        "name": "Remap",
+        "sim": false
+      },
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      },
+      {
+        "type": "STREAM_POWER",
+        "name": "Stream Power Erosion",
+        "sim": true
+      },
+      {
+        "type": "HYDRAULIC",
+        "name": "Droplet Erosion",
+        "sim": true
+      },
+      {
+        "type": "THERMAL",
+        "name": "Thermal Erosion",
+        "sim": true
+      }
+    ],
+    "grid": 1024,
+    "generateSeconds": 3.08,
+    "heightScale": 0.225,
+    "heightRange": [
+      -0.0011398553615435958,
+      0.9999999403953552
+    ],
+    "seaLevel": 0
+  },
+  {
+    "key": "swiss_alps",
+    "name": "Swiss Alps",
+    "description": "Swiss turbulence ridges, hard-rock stream power, thermal strata, simulated snowfall",
+    "layers": [
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      },
+      {
+        "type": "REMAP",
+        "name": "Remap",
+        "sim": false
+      },
+      {
+        "type": "STREAM_POWER",
+        "name": "Stream Power Erosion",
+        "sim": true
+      },
+      {
+        "type": "HYDRAULIC",
+        "name": "Droplet Erosion",
+        "sim": true
+      },
+      {
+        "type": "THERMAL",
+        "name": "Thermal Erosion",
+        "sim": true
+      },
+      {
+        "type": "SNOW",
+        "name": "Snowfall",
+        "sim": true
+      }
+    ],
+    "grid": 1024,
+    "generateSeconds": 2.38,
+    "heightScale": 0.3,
+    "heightRange": [
+      -0.006887421011924744,
+      1
+    ],
+    "seaLevel": 0
+  },
+  {
+    "key": "desert_canyon",
+    "name": "Desert Canyon",
+    "description": "A sandstone plateau cut by a network of slot canyons along its own drainage",
+    "layers": [
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "DOMAIN_WARP",
+        "name": "Domain Warp",
+        "sim": false
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      },
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "REMAP",
+        "name": "Remap",
+        "sim": false
+      },
+      {
+        "type": "TERRACE",
+        "name": "Terrace",
+        "sim": false
+      },
+      {
+        "type": "THERMAL",
+        "name": "Thermal Erosion",
+        "sim": true
+      },
+      {
+        "type": "STREAM_POWER",
+        "name": "Stream Power Erosion",
+        "sim": true
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      }
+    ],
+    "grid": 1024,
+    "generateSeconds": 1.52,
+    "heightScale": 0.2,
+    "heightRange": [
+      0,
+      0.9999999403953552
+    ],
+    "seaLevel": 0
+  },
+  {
+    "key": "island",
+    "name": "Volcanic Island",
+    "description": "Radial island falloff, droplet erosion, flat sea floor",
+    "layers": [
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      },
+      {
+        "type": "ISLAND_MASK",
+        "name": "Island Mask",
+        "sim": false
+      },
+      {
+        "type": "HYDRAULIC",
+        "name": "Droplet Erosion",
+        "sim": true
+      },
+      {
+        "type": "BASE_HEIGHT",
+        "name": "Base Height",
+        "sim": false
+      }
+    ],
+    "grid": 1024,
+    "generateSeconds": 1.14,
+    "heightScale": 0.175,
+    "heightRange": [
+      0.11999999731779099,
+      0.9981458783149719
+    ],
+    "seaLevel": 0.005693817838707219
+  },
+  {
+    "key": "badlands",
+    "name": "Badlands",
+    "description": "Steep soft-rock ridges stripped into gullies, striped strata, hot palette",
+    "layers": [
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "DOMAIN_WARP",
+        "name": "Domain Warp",
+        "sim": false
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      },
+      {
+        "type": "REMAP",
+        "name": "Remap",
+        "sim": false
+      },
+      {
+        "type": "TERRACE",
+        "name": "Terrace",
+        "sim": false
+      },
+      {
+        "type": "STREAM_POWER",
+        "name": "Stream Power Erosion",
+        "sim": true
+      },
+      {
+        "type": "THERMAL",
+        "name": "Thermal Erosion",
+        "sim": true
+      },
+      {
+        "type": "HYDRAULIC",
+        "name": "Droplet Erosion",
+        "sim": true
+      }
+    ],
+    "grid": 1024,
+    "generateSeconds": 2.33,
+    "heightScale": 0.14,
+    "heightRange": [
+      0,
+      1
+    ],
+    "seaLevel": 0
+  },
+  {
+    "key": "canyon",
+    "name": "Canyon Mesas",
+    "description": "Terraced plateaus cut by shallow-water channels and talus slopes",
+    "layers": [
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "NOISE",
+        "name": "Noise",
+        "sim": false
+      },
+      {
+        "type": "NORMALIZE",
+        "name": "Normalize",
+        "sim": false
+      },
+      {
+        "type": "TERRACE",
+        "name": "Terrace",
+        "sim": false
+      },
+      {
+        "type": "PIPE_EROSION",
+        "name": "Shallow Water Erosion",
+        "sim": true
+      },
+      {
+        "type": "THERMAL",
+        "name": "Thermal Erosion",
+        "sim": true
+      }
+    ],
+    "grid": 1024,
+    "generateSeconds": 3.13,
+    "heightScale": 0.225,
+    "heightRange": [
+      -0.015002856031060219,
+      1.001322865486145
+    ],
+    "seaLevel": 0
+  }
+]

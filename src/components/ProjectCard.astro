@@ -48,16 +48,17 @@ const number = String(index).padStart(2, '0');
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--bg-elev);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
     transition:
       border-color 0.3s var(--ease),
-      background-color 0.3s var(--ease),
+      box-shadow 0.3s var(--ease),
       transform 0.3s var(--ease);
   }
 
   .card:hover {
     border-color: var(--line-strong);
-    background: var(--surface);
+    box-shadow: var(--shadow-md);
     transform: translateY(-3px);
   }
 
@@ -71,7 +72,7 @@ const number = String(index).padStart(2, '0');
     aspect-ratio: 16 / 10;
     overflow: hidden;
     border-bottom: 1px solid var(--line);
-    background: #0e1216;
+    background: #ebe8e1;
   }
 
   .media :global(img),
@@ -102,7 +103,7 @@ const number = String(index).padStart(2, '0');
   }
 
   .num {
-    color: var(--accent);
+    color: var(--accent-text);
     margin-right: 0.75rem;
   }
 
@@ -124,7 +125,7 @@ const number = String(index).padStart(2, '0');
   }
 
   .card:hover .cta {
-    color: var(--accent);
+    color: var(--accent-text);
   }
 
   @media (min-width: 900px) {

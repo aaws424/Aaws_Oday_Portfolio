@@ -1,0 +1,100 @@
+---
+// Lightweight YouTube embed: a thumbnail until clicked, then the privacy-enhanced player.
+interface Props {
+  id: string;
+  title: string;
+}
+const { id, title } = Astro.props;
+---
+
+<figure class="yt" data-yt={id}>
+  <button type="button" class="yt-play" aria-label={`Play video: ${title}`}>
+    <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" width="480" height="360" />
+    <span class="yt-icon" aria-hidden="true"></span>
+  </button>
+  <figcaption>{title}</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-yt]').forEach((el) => {
+    const button = el.querySelector('button');
+    button?.addEventListener(
+      'click',
+      () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${el.dataset.yt}?autoplay=1&rel=0`;
+        iframe.title = el.querySelector('figcaption')?.textContent ?? 'YouTube video';
+        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+        iframe.allowFullscreen = true;
+        button.replaceWith(iframe);
+      },
+      { once: true },
+    );
+  });
+</script>
+
+<style>
+  .yt {
+    margin: 0;
+  }
+
+  .yt-play,
+  .yt :global(iframe) {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: #111;
+  }
+
+  .yt-play {
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .yt-play img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* hides the 4:3 letterbox bars of hqdefault */
+    transition: transform 0.5s var(--ease);
+  }
+
+  .yt-play:hover img {
+    transform: scale(1.03);
+  }
+
+  .yt-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 44px;
+    translate: -50% -50%;
+    border-radius: 12px;
+    background: rgba(21, 23, 26, 0.85);
+    transition: background-color 0.2s var(--ease);
+  }
+
+  .yt-icon::after {
+    content: '';
+    position: absolute;
+    left: 26px;
+    top: 13px;
+    border-style: solid;
+    border-width: 9px 0 9px 15px;
+    border-color: transparent transparent transparent #fff;
+  }
+
+  .yt-play:hover .yt-icon {
+    background: #e4570f;
+  }
+
+  figcaption {
+    margin-top: 0.55rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+</style>
