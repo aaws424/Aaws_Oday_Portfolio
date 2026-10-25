@@ -2,11 +2,12 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// GitHub Pages
-// - Repo named `aaws424.github.io`  -> site lives at https://aaws424.github.io (no `base` needed).
-// - Repo with any other name, e.g. `portfolio` -> add `base: '/portfolio'` below.
+// GitHub Pages: the repo `Aaws_Oday_Portfolio` is served at https://aaws424.github.io/Aaws_Oday_Portfolio/
+// `base` must match the repo name exactly (it is case-sensitive). If the repo is ever renamed to
+// `aaws424.github.io`, remove `base` and the site moves to https://aaws424.github.io/.
 // https://docs.astro.build/en/guides/deploy/github/
 export default defineConfig({
   site: 'https://aaws424.github.io',
+  base: '/Aaws_Oday_Portfolio',
   integrations: [sitemap()],
 });

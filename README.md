@@ -63,20 +63,20 @@ so you can drop in full-size renders.
 
 ## Deploy (free) on GitHub Pages
 
-1. Create a **public** repository named **`aaws424.github.io`** on GitHub.
-   (Any other name also works: then add `base: '/<repo-name>'` in `astro.config.mjs`.)
-2. Push this folder to the `main` branch:
-   ```sh
-   git init
-   git add .
-   git commit -m "Portfolio"
-   git branch -M main
-   git remote add origin https://github.com/aaws424/aaws424.github.io.git
-   git push -u origin main
-   ```
-3. On GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-4. Every push to `main` now rebuilds and publishes the site at **https://aaws424.github.io**
-   (see the **Actions** tab for progress).
+The site deploys from [github.com/aaws424/Aaws_Oday_Portfolio](https://github.com/aaws424/Aaws_Oday_Portfolio)
+to **https://aaws424.github.io/Aaws_Oday_Portfolio/**.
 
-A custom domain can be added later under Settings → Pages; put the domain in `public/CNAME`
-and change `site` in `astro.config.mjs`.
+1. One-time: on GitHub, **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. Every push to `main` rebuilds and publishes the site (see the **Actions** tab for progress):
+   ```sh
+   git add .
+   git commit -m "Describe the change"
+   git push
+   ```
+
+`base: '/Aaws_Oday_Portfolio'` in `astro.config.mjs` must match the repo name exactly. Internal links
+use `withBase()` from `src/lib/url.ts`, so they keep working if the base changes.
+
+**Shorter URL:** rename the repo to `aaws424.github.io` and remove `base` from `astro.config.mjs`;
+the site then lives at https://aaws424.github.io. A custom domain can be added under
+Settings → Pages; put the domain in `public/CNAME`, set `site` to it and remove `base`.
