@@ -10,7 +10,7 @@ highlights:
   - Designed a context-aware scattering system that procedurally populates yards based on lot and house dimensions.
   - Created a dynamic algorithm that automatically generates realistic, lot-specific fences and walls.
 cover: ../../assets/projects/icity-1-5/cover.webp
-coverAlt: iCity turning a traced 2D map into a 3D city block
+coverAlt: An iCity district from above — city blocks, rooftops and a central park
 videos:
   - { id: pOaYOzt_R6Q, title: 'iCity 1.5 — Google Maps tracing and elevated highways (complete guide)' }
 ---

@@ -13,9 +13,10 @@ highlights:
   - Created a curve-based tool to draw crowd paths with customizable density, movement types and randomness.
   - Implemented an intelligent pathfinding system so crowd agents navigate urban environments and avoid obstacles.
   - Developed a customizable, event-triggered ragdoll physics system using Blender's Python API.
-cover: ../../assets/projects/icrowds/city-street.webp
-coverAlt: A busy city intersection populated with iCrowds
+cover: ../../assets/projects/icrowds/stadium.webp
+coverAlt: A packed stadium populated with iCrowds
 gallery:
+  - { src: ../../assets/projects/icrowds/city-street.webp, alt: 'A busy city intersection populated with iCrowds' }
   - { src: ../../assets/projects/icrowds/distribution-ui.webp, alt: 'Crowd distribution around an obstacle, with the iCrowds panel: density, minimum spacing, seed and weight-paint control' }
   - { src: ../../assets/projects/icrowds/queue-path.webp, alt: 'A queue drawn with a curve, flowing through a gate' }
   - { src: ../../assets/projects/icrowds/night-street.webp, alt: 'Pedestrians on a dark, wet city street' }
